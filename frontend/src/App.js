@@ -23,6 +23,7 @@ const App = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setWord(''); //clears the input after API request
       })
       //in case that promise gets rejected
       .catch((err) => {
