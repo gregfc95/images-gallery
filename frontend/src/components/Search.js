@@ -1,12 +1,12 @@
-import React from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import React from 'react';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
 const Search = ({ word, setWord, handleSearchSubmit }) => {
   return (
     <Container className="mt-5">
       <Row className="justify-content-center">
         <Col xs={12} md={8} lg={6}>
-        {/* onsubmit itll be called every time its clicked */}
+          {/* onsubmit itll be called every time its clicked */}
           <Form onSubmit={handleSearchSubmit}>
             <Form.Row>
               <Col xs={9}>
