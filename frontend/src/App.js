@@ -12,10 +12,11 @@ const App = () => {
   //setword it's used to update the value of the variable word
   const [word, setWord] = useState('');
   const [images, setImages] = useState([]);
-  console.log(images);
+  // returns array
+  //  console.log(images);
 
   //send a API request
-  const handleSearchSubmit = (e) => {
+  function handleSearchSubmit(e) {
     // Prevent default form submission
     e.preventDefault();
     // Return a console.log with the input value
@@ -33,7 +34,7 @@ const App = () => {
         console.log(err);
       });
     setWord(''); //clears the input after API request
-  };
+  }
   //Used to check the API key of unsplash
   //console.log(process.env.REACT_APP_UNSPALSH_KEY);
   //only to check if the typing works
