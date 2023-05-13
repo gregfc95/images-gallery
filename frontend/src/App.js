@@ -2,6 +2,8 @@ import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Search from './components/Search';
+import ImageCard from './components/ImageCard';
+import { Container, Row, Col } from 'react-bootstrap';
 //bad practice, it leave the key public and unsecured
 //const UNSPLASH_KEY = '...';
 
@@ -20,14 +22,14 @@ const App = () => {
     // Prevent default form submission
     e.preventDefault();
     // Return a console.log with the input value
-    console.log(word);
+    // console.log(word);
     fetch(
       `https://api.unsplash.com/photos/random/?query=${word}&client_id=${UNSPLASH_KEY}`
     )
       //Promises, callbackfunction
       .then((res) => res.json())
       .then((data) => {
-        setImages([data, ...images]);
+        setImages([{ ...data, title: word }, ...images]);
       })
       //in case that promise gets rejected
       .catch((err) => {
@@ -39,7 +41,10 @@ const App = () => {
   //console.log(process.env.REACT_APP_UNSPALSH_KEY);
   //only to check if the typing works
   //  console.log(word);
-
+  //Map helper method looks all the elements of an array and returns a new array.
+  const handleDeleteImage = (id) => {
+    setImages(images.filter((image) => image.id !== id));
+  };
   return (
     <div>
       <Header title="Images Gallery" />
@@ -48,6 +53,15 @@ const App = () => {
         setWord={setWord}
         handleSearchSubmit={handleSearchSubmit}
       />
+      <Container className="mt-4">
+        <Row xs={1} md={2} lg={3}>
+          {images.map((image, i) => (
+            <Col key={i} className="pb-3">
+              <ImageCard image={image} deleteImage={handleDeleteImage} />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </div>
   );
 };
