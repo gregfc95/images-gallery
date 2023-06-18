@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 
+//props
 const ImageCard = ({ image, deleteImage }) => {
   return (
     <Card style={{ width: '18rem' }}>

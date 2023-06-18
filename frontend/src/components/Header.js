@@ -5,7 +5,7 @@ import { ReactComponent as Logo } from '../images/Logo.svg';
 const navbarStyle = {
   backgroundColor: '#EDF8FF',
 };
-
+//props
 const Header = ({ title }) => {
   //deconstruct an object
   return (

@@ -9,7 +9,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 //const UNSPLASH_KEY = '...';
 
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPALSH_KEY;
-
+//hooks
 const App = () => {
   //we used Usestate to define the initial value of word
   //setword it's used to update the value of the variable word

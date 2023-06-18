@@ -1,5 +1,6 @@
 import React from 'react';
 
+//props
 const Welcome = () => (
   <div className="container-fluid bg-dark text-light p-5">
     <div className="container bg-dark p-5">
