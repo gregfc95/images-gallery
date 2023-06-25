@@ -8,7 +8,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 //bad practice, it leave the key public and unsecured
 //const UNSPLASH_KEY = '...';
 
-const UNSPLASH_KEY = process.env.REACT_APP_UNSPALSH_KEY;
+const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_KEY;
 //hooks
 const App = () => {
   //we used Usestate to define the initial value of word
