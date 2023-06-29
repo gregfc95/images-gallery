@@ -8,7 +8,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 //bad practice, it leave the key public and unsecured
 //const UNSPLASH_KEY = '...';
 
-const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_KEY;
+const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5050';
+
 //hooks
 const App = () => {
   //we used Usestate to define the initial value of word
@@ -19,14 +20,12 @@ const App = () => {
   //  console.log(images);
 
   //send a API request
-  function handleSearchSubmit(e) {
+  const handleSearchSubmit = (e) => {
     // Prevent default form submission
     e.preventDefault();
     // Return a console.log with the input value
     // console.log(word);
-    fetch(
-      `https://api.unsplash.com/photos/random/?query=${word}&client_id=${UNSPLASH_KEY}`
-    )
+    fetch(`${API_URL}/new-image?query=${word}`)
       //Promises, callbackfunction
       .then((res) => res.json())
       .then((data) => {
@@ -37,7 +36,7 @@ const App = () => {
         console.log(err);
       });
     setWord(''); //clears the input after API request
-  }
+  };
   //Used to check the API key of unsplash
   //console.log(process.env.REACT_APP_UNSPALSH_KEY);
   //only to check if the typing works
