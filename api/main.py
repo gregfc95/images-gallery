@@ -1,4 +1,3 @@
-# save this as app.py
 import os
 import requests
 from flask import Flask, request
@@ -27,7 +26,7 @@ app.config["DEBUG"] = DEBUG
 
 @app.route("/new-image")
 def new_image():
-    word = request.args.get("query")
+    word = request.args.get("query")  # type: ignore retrieved of the query
     headers = {"Accept-Version": "v1", "Authorization": "Client-ID " + UNSPLASH_KEY}
     params = {"query": word}
     response = requests.get(url=UNSPLASH_URL, headers=headers, params=params)
