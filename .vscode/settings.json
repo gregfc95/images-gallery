@@ -6,7 +6,7 @@
         "javascriptreact"
     ],
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": "explicit"
     },
     "python.analysis.typeCheckingMode": "basic",
     "python.linting.pycodestyleEnabled": true, 
