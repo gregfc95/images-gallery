@@ -1,7 +1,6 @@
 {
     "editor.tabSize": 2,
     "eslint.validate": [
-        "html",
         "javascript",
         "javascriptreact"
     ],
@@ -19,4 +18,6 @@
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "ms-python.black-formatter"
     }
+
+    
 }

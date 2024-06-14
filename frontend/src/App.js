@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Search from './components/Search';
@@ -20,21 +21,30 @@ const App = () => {
   //  console.log(images);
 
   //send a API request
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = async (e) => {
     // Prevent default form submission
     e.preventDefault();
-    // Return a console.log with the input value
-    // console.log(word);
-    fetch(`${API_URL}/new-image?query=${word}`)
-      //Promises, callbackfunction
-      .then((res) => res.json())
-      .then((data) => {
-        setImages([{ ...data, title: word }, ...images]);
-      })
-      //in case that promise gets rejected
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log('Sending Request');
+    // // Return a console.log with the input value but instead of use this, we will use AXIOS
+    // // console.log(word);
+    // fetch(`${API_URL}/new-image?query=${word}`)
+    //   //Promises, callbackfunction
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setImages([{ ...data, title: word }, ...images]);
+    //   })
+    //   //in case that promise gets rejected
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    try {
+      const res = await axios.get(`${API_URL}/new-image?query=${word}`);
+      console.log('adding found image to the state');
+      setImages([{ ...res.data, title: word }, ...images]);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log('clearing search');
     setWord(''); //clears the input after API request
   };
   //Used to check the API key of unsplash
