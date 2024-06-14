@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
@@ -17,26 +17,25 @@ const App = () => {
   //setword it's used to update the value of the variable word
   const [word, setWord] = useState('');
   const [images, setImages] = useState([]);
-  // returns array
-  //  console.log(images);
+
+  const getSavedImages = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/images`);
+      setImages(res.data || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getSavedImages();
+  }, []);
 
   //send a API request
   const handleSearchSubmit = async (e) => {
     // Prevent default form submission
     e.preventDefault();
     console.log('Sending Request');
-    // // Return a console.log with the input value but instead of use this, we will use AXIOS
-    // // console.log(word);
-    // fetch(`${API_URL}/new-image?query=${word}`)
-    //   //Promises, callbackfunction
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setImages([{ ...data, title: word }, ...images]);
-    //   })
-    //   //in case that promise gets rejected
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
     try {
       const res = await axios.get(`${API_URL}/new-image?query=${word}`);
       console.log('adding found image to the state');
@@ -55,6 +54,25 @@ const App = () => {
   const handleDeleteImage = (id) => {
     setImages(images.filter((image) => image.id !== id));
   };
+
+  const handleSaveImage = async (id) => {
+    const imageToBeSaved = images.find((image) => image.id === id);
+    imageToBeSaved.saved = true;
+
+    try {
+      const res = await axios.post(`${API_URL}/images`, imageToBeSaved);
+      if (res.data?.inserted_id) {
+        setImages(
+          images.map((image) =>
+            image.id === id ? { ...image, saved: true } : image
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Header title="Images Gallery" />
@@ -68,7 +86,11 @@ const App = () => {
           <Row xs={1} md={2} lg={3}>
             {images.map((image, i) => (
               <Col key={i} className="pb-3">
-                <ImageCard image={image} deleteImage={handleDeleteImage} />
+                <ImageCard
+                  image={image}
+                  deleteImage={handleDeleteImage}
+                  saveImage={handleSaveImage}
+                />
               </Col>
             ))}
           </Row>
