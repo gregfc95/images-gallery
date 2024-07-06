@@ -51,8 +51,15 @@ const App = () => {
   //only to check if the typing works
   //  console.log(word);
   //Map helper method looks all the elements of an array and returns a new array.
-  const handleDeleteImage = (id) => {
-    setImages(images.filter((image) => image.id !== id));
+  const handleDeleteImage = async (id) => {
+    try {
+      const res = await axios.delete(`${API_URL}/images/${id}`);
+      if (res.data?.delete_id) {
+        setImages(images.filter((image) => image.id !== id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSaveImage = async (id) => {

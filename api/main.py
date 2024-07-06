@@ -70,9 +70,3 @@ def image(image_id):
 if __name__ == "__main__":
     # true we'll run below
     app.run(host="0.0.0.0", port=5050)
-
-
-# decorator function
-# def hello():
-#    return "Hello, World!"
-# app.route("/")(hello)
