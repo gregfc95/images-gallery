@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import Header from './components/Header';
 import Search from './components/Search';
 import ImageCard from './components/ImageCard';
@@ -25,8 +27,10 @@ const App = () => {
       const res = await axios.get(`${API_URL}/images`);
       setImages(res.data || []);
       setLoading(false);
+      toast.success('Saved images downloaded');
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   };
   useEffect(() => {
@@ -37,16 +41,18 @@ const App = () => {
   const handleSearchSubmit = async (e) => {
     // Prevent default form submission
     e.preventDefault();
-    console.log('Sending Request');
+    //console.log('Sending Request');
 
     try {
       const res = await axios.get(`${API_URL}/new-image?query=${word}`);
-      console.log('adding found image to the state');
+      //console.log('adding found image to the state');
       setImages([{ ...res.data, title: word }, ...images]);
+      toast.info(`New image ${word.toUpperCase()} was found`);
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
-    console.log('clearing search');
+    // console.log('clearing search');
     setWord(''); //clears the input after API request
   };
   //Used to check the API key of unsplash
@@ -58,10 +64,16 @@ const App = () => {
     try {
       const res = await axios.delete(`${API_URL}/images/${id}`);
       if (res.data?.delete_id) {
-        setImages(images.filter((image) => image.id !== id));
+        const deletedImage = images.find((i) => i.id === id);
+        toast.warn(`Image ${deletedImage.title.toUpperCase()} was deleted`);
+        setImages((prevImages) =>
+          prevImages.filter((image) => image.id !== id)
+        );
+        //setImages(images.filter((image) => image.id !== id));
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -77,9 +89,11 @@ const App = () => {
             image.id === id ? { ...image, saved: true } : image
           )
         );
+        toast.info(`Image ${imageToBeSaved.title.toUpperCase()} was saved`);
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -114,6 +128,7 @@ const App = () => {
           </Container>
         </>
       )}
+      <ToastContainer position="bottom-right" />
     </div>
   );
 };

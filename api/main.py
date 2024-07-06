@@ -63,8 +63,8 @@ def image(image_id):
         if not result:
             return {"error": "Image wasn't deleted, try agan"}, 500
         if result and not result.deleted_count:
-            return {"Error": "Image not found"}, 404
-        return {"delete_id": image_id}, 205
+            return {"error": "Image not found"}, 404
+        return {"delete_id": image_id}, 200
 
 
 if __name__ == "__main__":
