@@ -6,6 +6,7 @@ import Search from './components/Search';
 import ImageCard from './components/ImageCard';
 import Welcome from './components/Welcome';
 import { Container, Row, Col } from 'react-bootstrap';
+import Spinner from './components/Spinner';
 //bad practice, it leave the key public and unsecured
 //const UNSPLASH_KEY = '...';
 
@@ -17,11 +18,13 @@ const App = () => {
   //setword it's used to update the value of the variable word
   const [word, setWord] = useState('');
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getSavedImages = async () => {
     try {
       const res = await axios.get(`${API_URL}/images`);
       setImages(res.data || []);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -83,28 +86,34 @@ const App = () => {
   return (
     <div>
       <Header title="Images Gallery" />
-      <Search
-        word={word}
-        setWord={setWord}
-        handleSearchSubmit={handleSearchSubmit}
-      />
-      <Container className="mt-4">
-        {images.length ? (
-          <Row xs={1} md={2} lg={3}>
-            {images.map((image, i) => (
-              <Col key={i} className="pb-3">
-                <ImageCard
-                  image={image}
-                  deleteImage={handleDeleteImage}
-                  saveImage={handleSaveImage}
-                />
-              </Col>
-            ))}
-          </Row>
-        ) : (
-          <Welcome />
-        )}
-      </Container>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Search
+            word={word}
+            setWord={setWord}
+            handleSearchSubmit={handleSearchSubmit}
+          />
+          <Container className="mt-4">
+            {images.length ? (
+              <Row xs={1} md={2} lg={3}>
+                {images.map((image, i) => (
+                  <Col key={i} className="pb-3">
+                    <ImageCard
+                      image={image}
+                      deleteImage={handleDeleteImage}
+                      saveImage={handleSaveImage}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <Welcome />
+            )}
+          </Container>
+        </>
+      )}
     </div>
   );
 };
