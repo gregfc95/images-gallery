@@ -35,6 +35,7 @@ const App = () => {
   };
   useEffect(() => {
     getSavedImages();
+    document.title = 'Images Gallery';
   }, []);
 
   //send a API request
