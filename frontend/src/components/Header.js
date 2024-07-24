@@ -9,7 +9,7 @@ const navbarStyle = {
 const Header = ({ title }) => {
   //deconstruct an object
   return (
-    <Navbar style={navbarStyle} variant="light">
+    <Navbar data-testid="navbar" style={navbarStyle} variant="light">
       <Container>
         <Logo alt={title} style={{ maxWidth: '12rem', maxHeight: '2rem' }} />
       </Container>

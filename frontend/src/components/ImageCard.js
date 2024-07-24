@@ -6,7 +6,7 @@ const ImageCard = ({ image, deleteImage, saveImage }) => {
   const authorName = image.user?.name || 'No author name';
   const authorPortfolioURL = image.user?.portfolio_url;
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card data-testid="card" style={{ width: '18rem' }}>
       <Card.Img variant="top" src={image.urls.small} />
       <Card.Body>
         <Card.Title>{image.title?.toUpperCase()}</Card.Title>
